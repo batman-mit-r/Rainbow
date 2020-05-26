@@ -1,0 +1,29 @@
+2020-04-15 10:02:27.718 +02:00 [WRN] Anfrageart: Schmerzen; Bettnummer: 13; Schmerzlevel: 5
+2020-04-15 10:02:27.934 +02:00 [WRN] Anfrageart: Schmerzen; Bettnummer: 13
+2020-04-15 10:22:17.443 +02:00 [WRN] Anfrageart: Medikamente; Bettnummer: 12
+2020-04-15 10:22:48.322 +02:00 [WRN] Anfrageart: Schmerzen; Bettnummer: 12; Schmerzlevel: 5
+2020-04-15 10:22:48.323 +02:00 [WRN] Anfrageart: Schmerzen; Bettnummer: 12
+2020-04-15 10:23:01.706 +02:00 [WRN] Anfrageart: Hygiene; Bettnummer: 12
+2020-04-15 10:23:02.886 +02:00 [WRN] Anfrageart: Medikamente; Bettnummer: 12
+2020-04-15 10:23:08.678 +02:00 [WRN] Anfrageart: Sonstiges; Bettnummer: 12; Zusatz: Hallo
+2020-04-15 10:24:05.220 +02:00 [WRN] Anfrageart: Schmerzen; Bettnummer: 12; Schmerzlevel: 3
+2020-04-15 10:24:05.221 +02:00 [WRN] Anfrageart: Schmerzen; Bettnummer: 12
+2020-04-15 10:24:38.943 +02:00 [WRN] Bearbeitet von: TBAnfrageart: Schmerzen; Bettnummer: 12; Schmerzlevel: 3; Anfrage gestellt um: 15.04.2020 10:24:05
+2020-04-15 10:24:38.943 +02:00 [WRN] Bearbeitet von: TBAnfrageart: Schmerzen; Bettnummer: 12; Anfrage gestellt um: 15.04.2020 10:24:05
+2020-04-15 10:26:10.532 +02:00 [WRN] Bearbeitet von: TBAnfrageart: Medikamente; Bettnummer: 12; Anfrage gestellt um: 15.04.2020 10:22:17
+2020-04-15 10:39:48.905 +02:00 [WRN] Anfrageart: Medikamente; Bettnummer: 12
+2020-04-15 10:39:49.089 +02:00 [WRN] Anfrageart: Medikamente; Bettnummer: 12
+2020-04-15 10:39:49.576 +02:00 [WRN] Anfrageart: Hygiene; Bettnummer: 12
+2020-04-15 10:39:50.857 +02:00 [WRN] Anfrageart: Schmerzen; Bettnummer: 12; Schmerzlevel: 5
+2020-04-15 10:39:50.857 +02:00 [WRN] Anfrageart: Schmerzen; Bettnummer: 12
+2020-04-15 10:39:52.240 +02:00 [WRN] Anfrageart: Schmerzen; Bettnummer: 12; Schmerzlevel: 2
+2020-04-15 10:39:52.241 +02:00 [WRN] Anfrageart: Schmerzen; Bettnummer: 12
+2020-04-15 10:39:53.448 +02:00 [WRN] Anfrageart: Schmerzen; Bettnummer: 12; Schmerzlevel: 3
+2020-04-15 10:39:53.448 +02:00 [WRN] Anfrageart: Schmerzen; Bettnummer: 12
+2020-04-15 10:39:54.600 +02:00 [WRN] Anfrageart: Schmerzen; Bettnummer: 12; Schmerzlevel: 4
+2020-04-15 10:39:54.600 +02:00 [WRN] Anfrageart: Schmerzen; Bettnummer: 12
+2020-04-15 10:39:57.272 +02:00 [WRN] Anfrageart: Medikamente; Bettnummer: 12
+2020-04-15 10:39:57.666 +02:00 [WRN] Anfrageart: Hygiene; Bettnummer: 12
+2020-04-15 10:43:07.958 +02:00 [WRN] Bearbeitet von: TBAnfrageart: Schmerzen; Bettnummer: 12; Schmerzlevel: 5; Anfrage gestellt um: 15.04.2020 10:22:48
+2020-04-15 10:43:07.958 +02:00 [WRN] Bearbeitet von: TBAnfrageart: Schmerzen; Bettnummer: 12; Anfrage gestellt um: 15.04.2020 10:22:48
+2020-04-15 10:43:51.262 +02:00 [WRN] Bearbeitet von: TBAnfrageart: Medikamente; Bettnummer: 12; Anfrage gestellt um: 15.04.2020 10:39:49

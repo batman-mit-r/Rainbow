@@ -1,0 +1,164 @@
+﻿@page "/"
+@inject Data.AnfrageService AnfrageService
+@using Data
+
+<h1>Anforderungen</h1>
+
+@if (bett.Bettnummer == null)
+{
+    <form>
+        <div class="alert alert-primary" role="alert">
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" id="nurse_name" placeholder="Bitte Bettnummer eingeben" aria-label="Bettnummer" aria-describedby="basic-addon2" @bind-value="bett.Bettnummer">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">speichern</button>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        <h6>Bettnummer: </h6>
+        <h6>@bett.Bettnummer</h6>
+    </div>
+
+
+    @if (_Show_Schmerzlevel == true)
+    {
+        <h3>Bitte Schmerzen von sehr stark (5) bis schwach (1) auswählen: </h3>
+
+        <div>
+            <button class="btn btn-info btn-lg btn-block" @onclick="@(e => Schmerzlevel(1))">1</button>
+            <button class="btn btn-info btn-lg btn-block" @onclick="@(e => Schmerzlevel(2))">2</button>
+            <button class="btn btn-info btn-lg btn-block" @onclick="@(e => Schmerzlevel(3))">3</button>
+            <button class="btn btn-info btn-lg btn-block" @onclick="@(e => Schmerzlevel(4))">4</button>
+            <button class="btn btn-info btn-lg btn-block" @onclick="@(e => Schmerzlevel(5))">5</button>
+        </div>
+
+        <button type="button" class="btn btn-info mt-2" @onclick="Toggle_Back">zurück</button>
+
+
+    }
+    else if (_Show_Nahrungsmittel == true)
+    {
+        <h3>Essen</h3>
+        <form>
+            <div class="form-group">
+                <label for="essenTextarea">Bitte gewünschtes Nahrungsmittel eingeben:</label>
+                <textarea class="form-control" id="essenTextarea" rows="1" @bind="_Text_Nahrung"></textarea>
+            </div>
+        </form>
+        <button type="button" class="btn btn-info" @onclick="Toggle_Back">zurück</button>
+        <button type="button" class="btn btn-info" @onclick="Nahrungs_Anfrage">senden</button>
+    }
+    else if (_Show_Sonstiges == true)
+    {
+        <h3>Sonstiges</h3>
+        <form>
+            <div class="form-group">
+                <label for="sonstigesTextarea">Bitte Anliegen eingeben:</label>
+                <textarea class="form-control" id="sonstigesTextarea" rows="3" @bind="_Text_Sonstiges"></textarea>
+            </div>
+        </form>
+        <button type="button" class="btn btn-info" @onclick="Toggle_Back">zurück</button>
+        <button type="button" class="btn btn-info" @onclick="Sonstige_Anfrage">senden</button>
+    }
+    else
+    {
+        <button class="btn btn-info btn-lg btn-block" @onclick="Toggle_Schmerz">
+            <span aria-hidden="true"></span>Schmerzen
+        </button>
+        <button class="btn btn-info btn-lg btn-block" @onclick="Medicine">
+            <span aria-hidden="true"></span>Medikamente
+        </button>
+        <button class="btn btn-info btn-lg btn-block" @onclick="Toilet">
+            <span aria-hidden="true"></span> Hygiene
+        </button>
+        <button class="btn btn-info btn-lg btn-block" @onclick="Toggle_Nahrungsmittel">
+            <span aria-hidden="true"></span>Nahrungsmittel
+        </button>
+        <button class="btn btn-info btn-lg btn-block" @onclick="Toggle_Sonstiges">
+            <span aria-hidden="true"></span>Sonstiges
+        </button>
+    }
+}
+
+
+
+@code {
+
+    private Boolean _Show_Schmerzlevel = false;
+    private Boolean _Show_Nahrungsmittel = false;
+    private Boolean _Show_Sonstiges = false;
+    private String _Text_Nahrung = String.Empty;
+    private String _Text_Sonstiges = String.Empty;
+
+    private Bett bett = new Bett();
+
+    private void CreateAnfrage(Bett bettennummer, DateTime dateTime, AnfrageArt anfrageArt, int schmerzlevel, String zusatz)
+    {
+        Anfrage anfrage = new Anfrage();
+        anfrage.Bett = bettennummer;
+        anfrage.DateTime = dateTime;
+        anfrage.AnfrageArt = anfrageArt;
+        anfrage.Schmerzlevel = schmerzlevel;
+        anfrage.Zusatz = zusatz;
+
+        AnfrageService.AddAnfrage(anfrage);
+    }
+
+    private void Toggle_Schmerz()
+    {
+        _Show_Schmerzlevel = true;
+    }
+
+    private void Toggle_Nahrungsmittel()
+    {
+        _Show_Nahrungsmittel = true;
+    }
+
+    private void Nahrungs_Anfrage()
+    {
+        CreateAnfrage(bett, DateTime.Now, AnfrageArt.Nahrungsmittel, 0, _Text_Nahrung);
+        _Text_Nahrung = String.Empty;
+        Toggle_Back();
+    }
+
+    private void Toggle_Sonstiges()
+    {
+        _Show_Sonstiges = true;
+    }
+
+    private void Sonstige_Anfrage()
+    {
+        CreateAnfrage(bett, DateTime.Now, AnfrageArt.Sonstiges, 0, _Text_Sonstiges);
+        _Text_Sonstiges = String.Empty;
+        Toggle_Back();
+    }
+
+    private void Toggle_Back()
+    {
+        _Show_Schmerzlevel = false;
+        _Show_Nahrungsmittel = false;
+        _Show_Sonstiges = false;
+    }
+
+    private void Medicine()
+    {
+        CreateAnfrage(bett, DateTime.Now, AnfrageArt.Medikamente, 0, String.Empty);
+    }
+
+    private void Toilet()
+    {
+        CreateAnfrage(bett, DateTime.Now, AnfrageArt.Hygiene, 0, String.Empty);
+    }
+
+    private void Schmerzlevel(int level)
+    {
+        CreateAnfrage(bett, DateTime.Now, AnfrageArt.Schmerzen, level, String.Empty);
+
+        Toggle_Back();
+    }
+}

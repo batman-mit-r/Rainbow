@@ -1,0 +1,115 @@
+﻿@page "/nurse"
+@inject Data.AnfrageService AnfrageService
+@using Data
+<h3>Pflegekräfte</h3>
+
+@if (nurse.Nurse_Name == null)
+{
+    <form>
+        <div class="alert alert-primary" role="alert">
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" id="nurse_name" placeholder="Bitte Namenskürzel eingeben" aria-label="Name" aria-describedby="basic-addon2" @bind-value="nurse.Nurse_Name">
+                j<div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">speichern</button>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        <h6>Namenskürzel: </h6>
+        <h6>@nurse.Nurse_Name</h6>
+    </div>
+
+    @if (AnfrageService.anfrageListe.Count == 0)
+    {
+        <p><em>Keine Anfragen vorhanden...</em></p>
+    }
+    else
+    {
+        <h5>Ausstehende Anfrage:</h5>
+        <div class="list-group">
+            @foreach (var anfrage in AnfrageService.anfrageListe)
+            {
+                <button type="button" class="list-group-item list-group-item-action" @onclick="(e => Show_Details(anfrage))">
+                    <label>Bettnummer: </label><label><b>@anfrage.Bett.Bettnummer  </b></label>
+                    <label>Zeit: </label><label><b>@anfrage.DateTime.ToString()  </b></label>
+                    <label>Art der Anfrage: </label><label><b>@anfrage.AnfrageArt  </b></label>
+                </button>
+            }
+        </div>
+        @if (_show_Detail == true)
+        {
+            <div class="alert alert-info" role="alert">
+                <h5>Anfrage-Details:</h5>
+                <div><label>Bettnummer:</label><label><b>@_show_Details_Anfrage.Bett.Bettnummer</b></label></div>
+                <div><label>Zeit:</label><label><b>@_show_Details_Anfrage.DateTime.ToString()</b></label></div>
+                <div><label>Art der Anfrage:</label><label><b>@_show_Details_Anfrage.AnfrageArt</b></label></div>
+                @if (_show_Details_Anfrage.AnfrageArt == AnfrageArt.Schmerzen)
+                {
+                    <div><label>Schmerzlevel: </label><label><b>@_show_Details_Anfrage.Schmerzlevel</b></label></div>
+                }
+                @if (_show_Details_Anfrage.AnfrageArt == AnfrageArt.Nahrungsmittel)
+                {
+                    <div><label>gewünschtes Nahrungsmittel: </label><label><b>@_show_Details_Anfrage.Zusatz</b></label></div>
+                }
+                @if (_show_Details_Anfrage.AnfrageArt == AnfrageArt.Sonstiges)
+                {
+                    <div><label>sonstige Wünsche: </label><label><b>@_show_Details_Anfrage.Zusatz</b></label></div>
+                }
+                <button type="button" class="btn btn-primary" @onclick="Handle_Request">Anfrage bearbeiten</button>
+            </div>
+        }
+    }
+    @if (AnfrageService.anfrageListeBearbeitet.Count == 0)
+    {
+        <p><em>Keine Anfragen wurden bearbeitet...</em></p>
+    }
+    else
+    {
+        <h5>Bearbeitete Anfragen:</h5>
+        <ul class="list-group">
+            @foreach (var anfrage_bearbeitet in AnfrageService.anfrageListeBearbeitet)
+            {
+                <li class="list-group-item">
+                    <div>
+                        <label>Bettnummer: </label><label><b>@anfrage_bearbeitet.Basierende_Anfrage.Bett.Bettnummer</b></label>
+                        <label>Zeit: </label><label><b>@anfrage_bearbeitet.Basierende_Anfrage.DateTime.ToString()  </b></label>
+                        <label>Art der Anfrage: </label><label><b>@anfrage_bearbeitet.Basierende_Anfrage.AnfrageArt  </b></label>
+                    </div>
+                    <div>
+                        <label>Pflegekraft: </label><label><b>@anfrage_bearbeitet.Responsible_Nurse.Nurse_Name</b></label>
+                        <label>Bearbeitet um: </label><label><b>@anfrage_bearbeitet.DateTime_Bearbeitet.ToString()</b></label>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+}
+
+
+@code {
+    private Data.Nurse nurse = new Data.Nurse();
+
+    private Anfrage _show_Details_Anfrage = new Anfrage();
+    private Boolean _show_Detail = false;
+
+    private void Show_Details(Anfrage anfrage)
+    {
+        _show_Detail = true;
+        _show_Details_Anfrage = anfrage;
+    }
+
+    private void Handle_Request()
+    {
+        AnfrageBearbeitet bearbeitete_Anfrage = new AnfrageBearbeitet();
+        bearbeitete_Anfrage.Basierende_Anfrage = _show_Details_Anfrage;
+        bearbeitete_Anfrage.Responsible_Nurse = nurse;
+        bearbeitete_Anfrage.DateTime_Bearbeitet = DateTime.Now;
+
+        AnfrageService.DeleteAnfrage(_show_Details_Anfrage);
+        AnfrageService.AddBearbeiteteAnfrage(bearbeitete_Anfrage);
+    }
+}
